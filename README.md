@@ -1,22 +1,43 @@
 # ml-notebooks
 
-Machine learning notebooks from course projects, grouped by topic. Each project folder has its own README covering the problem, the approach, the results (with the caveats) and how to run it. Datasets and model files are not tracked.
+Notebooks from coursework in natural language processing and computer vision. Each folder is one project with its notebook, a README that explains the problem, what was done, the results and the limitations, and a `requirements.txt`. Datasets, generated images and model weights are not included; each README says where the data comes from.
 
 ## Projects
 
-| Project | Area | Approach | Key result |
-|---|---|---|---|
-| [Clickbait spoiling](nlp/clickbait-spoiling) | NLP | Two-person course project on SemEval 2023 Task 5, subtask 1: fine-tuned transformer baselines, and a two-stage method (SpanBERT span tagging, then BERT classification) | Best baseline test balanced accuracy 0.695 (`roberta-base`). The span method reached 0.611 on the validation set, below the baseline's 0.709 on the same set. The README covers the failed runs and open questions |
-| [mBERT sentiment classification](nlp/sentiment-mbert) | NLP | Fine-tuned `bert-base-multilingual-cased` on 5,000 IMDb reviews, evaluated on 1,000 held-out reviews | Precision 0.826, recall 0.820, F1 0.823 (positive class, one run) |
-| [Spine segmentation](computer-vision/spine-segmentation) | Computer vision | Classical image processing (CLAHE, edge maps, brightness profiles) to split a frontal spine X-ray into individual vertebrae | Qualitative: 22 vertebra crops on a sample X-ray, no quantitative metric (group project, 3 members) |
-| [Synthetic Thai text data](computer-vision/thai-text-synthetic-data) | Computer vision | Generator for labelled images of Thai words on textured backgrounds, with bounding boxes and augmentation (brightness, contrast, perspective, noise, blur), for a billboard text reading term project | 10,000 images (2,500 base x 4) in the stored run. A model trained on it was very accurate on the generated fonts and much lower on other fonts in the real task (qualitative, the model is not in this repo) |
+### Clickbait spoiler classification (NLP)
+[`nlp/clickbait-spoiling`](nlp/clickbait-spoiling) · two-person course project, SemEval 2023 Task 5 subtask 1
+
+A clickbait post promises information that is only in the linked article. The task is to predict what kind of spoiler the post needs: a short phrase, a longer passage, or several separate parts. This folder has two notebooks. The first fine-tunes seven pretrained transformer encoders with the same training code and compares them. The second is a two-stage method: SpanBERT first tags the spoiler tokens in the article, then a BERT classifier predicts the type from the tagged text.
+
+Result: the best baseline (`roberta-base`) reaches 0.695 balanced accuracy on the test set. The two-stage method reaches 0.611 on the validation set, below the baseline's 0.709 on the same set. The README also documents the baseline runs that collapsed to always predicting one class (0.333).
+
+### Sentiment classification with mBERT (NLP)
+[`nlp/sentiment-mbert`](nlp/sentiment-mbert)
+
+Fine-tunes `bert-base-multilingual-cased` on 5,000 IMDb movie reviews to classify them as positive or negative, and evaluates it on 1,000 held-out reviews.
+
+Result: precision 0.826, recall 0.820 and F1 0.823 for the positive class, from one run.
+
+### Vertebra segmentation from a spine X-ray (computer vision)
+[`computer-vision/spine-segmentation`](computer-vision/spine-segmentation) · group term project, 3 members
+
+Splits a frontal full-spine X-ray into one image per vertebra, labelled from the sacrum to C1, using only classical image processing (gamma correction, CLAHE, edge enhancement, brightness profiles). There is no trained model.
+
+Result: 22 vertebra crops on a sample X-ray. The evaluation is qualitative, with no ground truth and no metric.
+
+### Synthetic Thai text data for billboard text reading (computer vision)
+[`computer-vision/thai-text-synthetic-data`](computer-vision/thai-text-synthetic-data) · term project
+
+A generator for labelled training images: Thai words from Wikipedia drawn on many kinds of background surfaces, with bounding boxes, plus augmented copies (brightness, contrast, perspective, noise, blur). The stored run made 10,000 images from 2,500 base images.
+
+Result: a model trained on this data was very accurate on the fonts used for generation and much lower on other fonts in the real task. This is a qualitative summary; the model is not in this repository.
 
 ## Repository layout
 
 ```
 ml-notebooks/
   nlp/
-    clickbait-spoiling/        notebooks, README, requirements.txt
+    clickbait-spoiling/        2 notebooks, README, requirements.txt
     sentiment-mbert/           notebook, README, requirements.txt
   computer-vision/
     spine-segmentation/        notebook, README, requirements.txt
