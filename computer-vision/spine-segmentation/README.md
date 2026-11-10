@@ -18,12 +18,11 @@ Given a frontal full-spine X-ray, split the spine into one image per vertebra an
 
 ## Results
 
-The stored outputs show each stage: the enhancement panels, the isolated spine, the cut points on the row profile, and the individual crops (22 in the stored run). The evaluation is qualitative only. There is no ground truth and no quantitative metric.
+The stored outputs show each stage: the enhancement panels, the isolated spine, the cut points on the row profile, and the individual crops (22 in the stored run). The evaluation is qualitative only.
 
-## Limitations
+## Known limitations of the implementation
 
-- Every constant (gamma, strip count, window sizes, thresholds) was set by hand, and the method was not validated on other images, so I would not expect it to transfer to other scanners or patient positioning without retuning.
-- Only a frontal view was used, and the cervical vertebrae overlap in that view, so the upper crops are the least reliable.
+- Every constant (gamma, strip count, window sizes, thresholds) is a fixed value set in the code. There is no ground truth and no quantitative metric.
 - The vertebra labels are assigned by counting cut points from the bottom. A missed or extra cut point shifts every label above it.
 
 ## Data

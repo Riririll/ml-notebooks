@@ -40,11 +40,11 @@ Each record has the post text, the article title, the article paragraphs, the sp
 
 The best run (`roberta-base`, run 2) reaches 0.695 balanced accuracy and 0.71 plain accuracy. Its per-class F1 is 0.73 for `phrase`, 0.73 for `passage` and 0.64 for `multi`. On the validation set the same run reached 0.709.
 
-**What the results show, and what they do not.**
-- Five of the ten runs scored exactly 0.333, where the model predicted the same class (`phrase`) for every input. `deberta-v3-base` came close to the same failure. The same model and settings gave 0.333 in run 1 and 0.695 in run 2 for `roberta-base`, so the outcome depends strongly on the random seed.
-- The large models failed in both runs. A likely explanation is that the default learning rate is too aggressive for them at batch size 8, but this was not tested.
-- In the best run, validation loss is lowest at epoch 3 and rises afterwards while training loss keeps falling, so overfitting starts early.
-- These are single runs without seed control, so differences of a few points between the base-size models are within what seed noise could explain.
+**Notes from the stored outputs.**
+- Five of the ten runs scored exactly 0.333: the model predicted `phrase` for every test post. `deberta-v3-base` scored 0.352.
+- `roberta-base` scored 0.333 in run 1 and 0.695 in run 2 with the same code and settings. Seeds are not fixed in the notebook.
+- In the best run, validation loss is lowest at epoch 3 (0.728) and is 1.084 at epoch 5, while training loss keeps falling. Validation balanced accuracy still rises to its best value at epoch 5 (0.709).
+- Every number above comes from a single run.
 
 ## Notebook 2: span tagging, then classification
 
@@ -65,20 +65,16 @@ Settings behind the stored results: learning rate 5e-6 with linear decay and no 
 
 Balanced accuracy 0.6111, accuracy 0.6575. For comparison, the `roberta-base` baseline reached 0.709 on the same validation set, so this method did not beat the plain baseline. The notebook also stores a second Stage 2 run with the default settings in the source (3 epochs, batch size 16), which scored 0.361 and never predicted `multi`.
 
-**Observations and open questions.**
-- The model rarely predicts `multi`, but when it does it is almost always right (precision 0.92, recall 0.42). `multi` is 17.5% of the training data. Code that oversamples `multi` is present in `run_classification_only` but is commented out, so it was not part of these results.
-- Stage 1 token-level validation accuracy is 0.9694 in all three epochs. Spoiler tokens are a small share of all tokens (8 of 256 positions in the sample the notebook prints, with padding counted as `O`), so a tagger that predicts `O` everywhere would also score a high accuracy. The constant value hints that the tagger may not have learned to find spans, but no span-level metric is reported, so this is not established. The accuracy code also zips all validation predictions with only the last batch's attention mask, so it covers just the last 32 validation posts.
-- The spans are appended after the full article text and the input is truncated to 256 tokens. For long articles the spans would be cut off. How often this happens was not measured.
-- Stage 2 is trained on spans predicted by a tagger on its own training data, while validation and test spans come from unseen posts, so the training spans are probably cleaner than the ones seen at test time.
-- Validation data both picks the stopping epoch (in the current code) and is the data the result is reported on, so the number is slightly optimistic.
+**Notes from the code and stored outputs.**
+- `multi` precision is 0.92 and recall is 0.42. The code that oversamples `multi` in `run_classification_only` is commented out, so it was not used for these results.
+- Stage 1 token-level validation accuracy is 0.9694 in all three epochs. No span-level metric is computed. The accuracy code zips all validation predictions with only the last batch's attention mask, so it covers the last 32 validation posts only.
+- Spans are appended after the full article text and the input is truncated to 256 tokens.
+- Stage 2 training uses spans predicted by the tagger on its own training data.
+- The validation set is used for early stopping and is also the set the result is reported on.
 
 ## Comparing the two
 
 The baselines are scored on the test set and the span method on the validation set, so the two tables are not directly comparable. Only the validation figure for `roberta-base` (0.709 against 0.611) is a like-for-like comparison. The baselines also use library defaults, while the span method uses its own learning rate schedule and early stopping.
-
-## What I would do next
-
-Fix the random seeds and repeat runs, check what the tagger actually predicts at the span level, put the spans before the article text (or shorten the article) so they survive truncation, train Stage 2 on out-of-fold spans, turn on `multi` oversampling or a class-weighted loss, and score everything on the test set. None of this is done in the notebooks.
 
 ## Reproduce
 
