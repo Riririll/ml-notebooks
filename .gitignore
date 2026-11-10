@@ -1,0 +1,29 @@
+# Data and model files (not tracked; see each project's README for how to get them)
+data/
+*.csv
+*.jsonl
+*.jpeg
+*.jpg
+*.png
+*.pt
+*.bin
+*.safetensors
+*.ckpt
+results/
+outputs/
+runs/
+wandb/
+cache_dir/
+
+# Python / notebooks
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Secrets and OS files
+.env
+*.key
+.DS_Store
+Thumbs.db
