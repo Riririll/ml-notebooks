@@ -3,6 +3,4 @@ scikit-learn
 torch
 transformers
 datasets
-evaluate
-simpletransformers
 tqdm

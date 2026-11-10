@@ -23,7 +23,7 @@ ml-notebooks/
 
 ## Running the notebooks
 
-The notebooks were written in Google Colab, so some cells use Colab paths such as `/content/` and a mounted Google Drive. To run one locally or in a fresh Colab session, install the project's `requirements.txt`, place the data where the project README says, and edit the path cells near the top. Stored outputs are kept in the notebooks so the results can be read without rerunning anything.
+The notebooks were written in Google Colab, so some cells use Colab paths such as `/content/`. To run one locally or in a fresh Colab session, install the project's `requirements.txt`, place the data where the project README says, and edit the path cells near the top. Stored outputs are kept in the notebooks so the results can be read without rerunning anything.
 
 ## Related work
 

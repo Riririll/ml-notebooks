@@ -12,7 +12,7 @@ Given a frontal full-spine X-ray, split the spine into one image per vertebra an
 
 **Part 1: enhancement.** Gamma correction (gamma 4.5) is applied first, then CLAHE (clip limit 3, 8 by 8 tiles) boosts local contrast. Sobel and Canny edge maps are combined and blended back into the image (weights 0.7 and 0.3). The notebook also renders the original and enhanced image with a JET color map to make bone structure easier to see.
 
-**Part 2: isolating the spine column.** The image is cropped to its central region (width divided by 2.5) and cut into 25 horizontal strips. In each strip the brightest region is kept through a mask, and everything else is set to black. The strips are then placed back on a black background, which leaves only the spine.
+**Part 2: isolating the spine column.** The image is cropped to its central region (width divided by 2.5) and cut into horizontal strips of height // 25 rows. The loop runs 25 times, but the strip position only advances for the first 24 passes, so the 25th pass repeats the 24th strip and the rows below 24 x (height // 25) are left black. In each strip the brightest region is kept through a mask, and everything else is set to black. The strips are then placed back on a black background, which leaves only the spine.
 
 **Part 3: splitting into vertebrae.** Columns outside a central band are zeroed and the pixel values of each row are summed. The row profile is smoothed with a moving average (window of height divided by 50), and its local minima are taken as the gaps between vertebrae. Each smoothed minimum is snapped to the lowest raw row sum within height divided by 100 rows. The image is then cropped between consecutive cut points with a small margin, and segments shorter than height divided by 40 are skipped. Cut points are processed from the bottom up, so the crops are labelled `Sacrum, L5 ... L1, T12 ... T1, C7 ... C1`.
 
@@ -36,4 +36,4 @@ The input X-ray files are not included as separate files. The notebook expects t
 pip install -r requirements.txt
 ```
 
-Place your own frontal spine X-ray at the image paths used in the notebook (or edit them) and run the cells in order. The last cells write the crops to a Google Drive folder, so change that output path as well.
+Place your own frontal spine X-ray at the image paths used in the notebook (or edit them) and run the cells in order. The last cell writes the crops to a `spine_parts/` folder.
