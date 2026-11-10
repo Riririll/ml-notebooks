@@ -7,7 +7,7 @@ Machine learning notebooks from course projects, grouped by topic. Each project 
 | Project | Area | Approach | Key result |
 |---|---|---|---|
 | [Clickbait spoiling](nlp/clickbait-spoiling) | NLP | Fine-tune pretrained transformers to classify the spoiler type of a clickbait post (SemEval 2023 Task 5, subtask 1) | Best test balanced accuracy 0.695 (`roberta-base`) on 1,000 test posts; about half of the runs collapsed to one class, which the README discusses |
-| [Spine segmentation](computer-vision/spine-segmentation) | Computer vision | Classical image processing (CLAHE, edge maps, brightness profiles) to split a frontal spine X-ray into individual vertebrae | Qualitative: 22 vertebra crops on one X-ray, no quantitative metric (group project, 3 members) |
+| [Spine segmentation](computer-vision/spine-segmentation) | Computer vision | Classical image processing (CLAHE, edge maps, brightness profiles) to split a frontal spine X-ray into individual vertebrae | Qualitative: 22 vertebra crops on a sample X-ray, no quantitative metric (group project, 3 members) |
 
 ## Repository layout
 
