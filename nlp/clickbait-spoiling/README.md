@@ -63,11 +63,11 @@ Settings behind the stored results: learning rate 5e-6 with linear decay and no 
 | passage | 0.69 | 0.58 | 0.63 |
 | multi | 0.92 | 0.42 | 0.58 |
 
-Balanced accuracy 0.6111, accuracy 0.6575. For comparison, the `roberta-base` baseline reached 0.709 on the same validation set, so this method did not beat the plain baseline. The notebook also stores a second Stage 2 run with the default settings in the source (3 epochs, batch size 16), which scored 0.361 and mostly predicted `phrase` and `passage`.
+Balanced accuracy 0.6111, accuracy 0.6575. For comparison, the `roberta-base` baseline reached 0.709 on the same validation set, so this method did not beat the plain baseline. The notebook also stores a second Stage 2 run with the default settings in the source (3 epochs, batch size 16), which scored 0.361 and never predicted `multi`.
 
 **Observations and open questions.**
 - The model rarely predicts `multi`, but when it does it is almost always right (precision 0.92, recall 0.42). `multi` is 17.5% of the training data. Code that oversamples `multi` is present in `run_classification_only` but is commented out, so it was not part of these results.
-- Stage 1 token-level validation accuracy is 0.9694 in all three epochs. In the sample checked in the notebook, 248 of 256 tokens are labelled `O`, so about 97% of tokens are `O`. A tagger that predicts `O` everywhere would give about the same accuracy, so the tagger may not have learned to find spans. No span-level metric is reported, so this is not established.
+- Stage 1 token-level validation accuracy is 0.9694 in all three epochs. Spoiler tokens are a small share of all tokens (8 of 256 positions in the sample the notebook prints, with padding counted as `O`), so a tagger that predicts `O` everywhere would also score a high accuracy. The constant value hints that the tagger may not have learned to find spans, but no span-level metric is reported, so this is not established. The accuracy code also zips all validation predictions with only the last batch's attention mask, so it covers just the last 32 validation posts.
 - The spans are appended after the full article text and the input is truncated to 256 tokens. For long articles the spans would be cut off. How often this happens was not measured.
 - Stage 2 is trained on spans predicted by a tagger on its own training data, while validation and test spans come from unseen posts, so the training spans are probably cleaner than the ones seen at test time.
 - Validation data both picks the stopping epoch (in the current code) and is the data the result is reported on, so the number is slightly optimistic.
