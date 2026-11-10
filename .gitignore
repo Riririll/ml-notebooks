@@ -27,3 +27,8 @@ venv/
 *.key
 .DS_Store
 Thumbs.db
+
+# README figures are tracked
+!**/figures/
+!**/figures/*.png
+!**/figures/*.jpg

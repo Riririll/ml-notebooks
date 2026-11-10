@@ -38,6 +38,8 @@ Each record has the post text, the article title, the article paragraphs, the sp
 | `bert-large-uncased` | 0.333 | 0.333 |
 | `roberta-large` | 0.333 | 0.333 |
 
+![Test balanced accuracy of every baseline run](figures/baseline_results.png)
+
 The best run (`roberta-base`, run 2) reaches 0.695 balanced accuracy and 0.71 plain accuracy. Its per-class F1 is 0.73 for `phrase`, 0.73 for `passage` and 0.64 for `multi`. On the validation set the same run reached 0.709.
 
 **What the results show, and what they do not.**

@@ -19,7 +19,7 @@ Fine-tunes `bert-base-multilingual-cased` on 5,000 IMDb movie reviews to classif
 Result: precision 0.826, recall 0.820 and F1 0.823 for the positive class, from one run.
 
 ### Vertebra segmentation from a spine X-ray (computer vision)
-[`computer-vision/spine-segmentation`](computer-vision/spine-segmentation) · group term project, 3 members
+[`computer-vision/spine-segmentation`](computer-vision/spine-segmentation) · group term project, 3 members (I designed the vertebra-splitting algorithm)
 
 Splits a frontal full-spine X-ray into one image per vertebra, labelled from the sacrum to C1, using only classical image processing (gamma correction, CLAHE, edge enhancement, brightness profiles). There is no trained model.
 

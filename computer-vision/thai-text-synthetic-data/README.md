@@ -20,6 +20,12 @@ The stored run used 2,500 base images, so 2,500 x (1 original + 3 augmented) = 1
 
 The stored output of the generation cell and the figure of 100 random samples with their boxes drawn come from the run made before the code was cleaned up. The cleanup removed unused code (a multi-line text generator, fixed phrase lists, a plate-drawing step that was commented out) and reworded the printed messages. It also changed one behaviour: each augmented copy now starts from the original bounding box. Before, a copy started from the box left by the previous copy of the same image, because the annotation dictionary was shared between copies. The figure is stored at reduced resolution.
 
+## Examples
+
+A sample of generated images with the stored bounding box and text drawn in red. The notebook shows 100 samples; this is the top-left part of that figure.
+
+![Generated samples](figures/samples.jpg)
+
 ## Result
 
 On the fonts used for generation, a model trained on this data was very accurate. On other fonts that appear in the real task data, accuracy was much lower. So the generated data works for the fonts it covers. This is a qualitative summary from the project. The notebook does not contain the model or its metrics.

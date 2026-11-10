@@ -2,7 +2,7 @@
 
 Notebook: [`spine_segmentation.ipynb`](spine_segmentation.ipynb)
 
-Group term project (3 members).
+Group term project (3 members). I designed the vertebra-splitting algorithm (Part 3).
 
 ## Overview
 
@@ -18,7 +18,23 @@ Given a frontal full-spine X-ray, split the spine into one image per vertebra an
 
 ## Results
 
-The stored outputs show each stage: the enhancement panels, the isolated spine, the cut points on the row profile, and the individual crops (22 in the stored run). The evaluation is qualitative only. There is no ground truth and no quantitative metric.
+The stored outputs show each stage: the enhancement panels, the isolated spine, the cut points on the row profile, and the individual crops. The evaluation is qualitative only. The stored run produced 22 crops, labelled from the sacrum up to C4, so no crops were made for C3, C2 and C1.
+
+**Part 1, pre-processing.** Original, CLAHE, edge maps and the enhanced image, in grayscale and pseudocolor:
+
+![Pre-processing panels](figures/1_preprocessing.png)
+
+**Part 2, spine isolation.** Only the brightest region of each strip is kept:
+
+![Isolated spine](figures/2_isolated_spine.png)
+
+**Part 3, vertebra splitting.** Row sums of the isolated spine, with the cut points at the local minima:
+
+![Row sums and cut points](figures/3_row_sums_and_cut_points.png)
+
+**Output.** The crops, one per vertebra:
+
+![Vertebra crops](figures/4_vertebra_crops.png)
 
 ## Limitations
 
