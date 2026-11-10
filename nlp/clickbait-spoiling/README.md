@@ -86,4 +86,6 @@ Fix the random seeds and repeat runs, check what the tagger actually predicts at
 pip install -r requirements.txt
 ```
 
+The stored outputs of the first notebook were produced before the `TrainingArguments` and `Trainer` calls were updated for `transformers` 5.x (`eval_strategy`, no `logging_dir`, `processing_class`). The updated cell has not been rerun.
+
 Both notebooks were written for Google Colab with a GPU. For the first notebook, put `train.jsonl`, `val.jsonl` and `test.jsonl` in a `data/` folder. For the second notebook, put `train.jsonl`, `validation.jsonl` and `test.jsonl` in the working directory, run `run_full_pipeline`, and set `TRAIN_BATCH_SIZE = 8`, `VALID_BATCH_SIZE = 16` and `EPOCHS = 5` to match the stored result. `run_classification_only` reuses the saved tagger (`span_tagger_model.pt`) and retrains only Stage 2.
